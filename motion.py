@@ -4,7 +4,7 @@ import imutils
 import numpy as np
 import time
 
-# Read camera parameters
+# Read the camera parameters
 camera_conf = open('camera.conf', 'r')
 lines = camera_conf.readlines()
 

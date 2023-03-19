@@ -8,9 +8,9 @@ import time
 camera_conf = open('camera.conf', 'r')
 lines = camera_conf.readlines()
 
-ip = lines[0].replace("\n","")
-login = lines[1].replace("\n","")
-password = lines[2].replace("\n","")
+ip          = lines[0].replace("\n","")
+login       = lines[1].replace("\n","")
+password    = lines[2].replace("\n","")
 
 camera_address = "rtsp://"+login+":"+password+"@"+ip
 
@@ -30,6 +30,8 @@ writer = None
 patience = 50
 patience_cpt = 0
 display_contours = True
+
+show_image = True
 
 while(True):
     ret, frame = capture.read()
@@ -95,8 +97,14 @@ while(True):
             writer = None
             patience_cpt = 0
     
-    cv2.waitKey(1000)
+    if show_image :
+        height, width, layers = frame.shape
+        new_h = height // 2
+        new_w = width // 2
+        frame_resized = cv2.resize(frame, (new_w, new_h))
+        cv2.imshow('Camera', frame_resized)
 
+    cv2.waitKey(1)
 
 capture.release()
 if writer != None :
